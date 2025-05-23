@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Simulate Network Traffic</h2>
+    <form method="POST" action="{{ url_for('simulate_traffic') }}">
+        <div class="form-group">
+            <label for="duration">Duration</label>
+            <input type="text" name="duration" required>
+        </div>
+        <div class="form-group">
+            <label for="protocol_type">Protocol Type</label>
+            <select name="protocol_type" required>
+                <option value="">Select Protocol</option>
+                <option value="tcp">TCP</option>
+                <option value="udp">UDP</option>
+                <option value="icmp">ICMP</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="service">Service</label>
+            <input type="text" name="service" required>
+        </div>
+        <div class="form-group">
+            <label for="flag">Flag</label>
+            <input type="text" name="flag" required>
+        </div>
+        <div class="form-group">
+            <label for="src_bytes">Source Bytes</label>
+            <input type="text" name="src_bytes" required>
+        </div>
+        <div class="form-group">
+            <label for="dst_bytes">Destination Bytes</label>
+            <input type="text" name="dst_bytes" required>
+        </div>
+        <div class="form-group">
+            <label for="logged_in">Logged In</label>
+            <select name="logged_in" required>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="wrong_fragment">Wrong Fragments</label>
+            <input type="text" name="wrong_fragment" required>
+        </div>
+        <div class="form-group">
+            <label for="same_srv_count">Same Destination Count</label>
+            <input type="text" name="same_srv_count" required>
+        </div>
+        <div class="form-group">
+            <label for="same_srv_rate">Same Port Count</label>
+            <input type="text" name="same_srv_rate" required>
+        </div>
+        <button type="submit">Detect Attack</button>
+    </form>
+    {% if prediction %}
+        <h3>Prediction: {{ prediction }}</h3>
+    {% endif %}
+{% endblock %}

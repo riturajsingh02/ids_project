@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>File Upload & Scan</h2>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".csv" required>
+        <button type="submit">Upload & Queue Scan</button>
+    </form>
+    {% if job_id %}
+        <p>Status: {{ status }}</p>
+        <p>Job ID: {{ job_id }}</p>
+        {% if results %}
+            <h3>Scan Results:</h3>
+            <ul>
+                {% for r in results %}
+                    <li>{{ r }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Check again soon for results.</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}
