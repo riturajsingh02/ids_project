@@ -1,0 +1,7 @@
+duration,protocol_type,service,flag,src_bytes,dst_bytes,logged_in,wrong_fragment,same_srv_count,same_srv_rate
+0,tcp,http,SF,181,5450,1,0,9,0.00
+5,tcp,http,SF,300,2500,1,0,8,0.03
+10,tcp,smtp,SF,500,3000,1,0,4,0.20
+8,tcp,http,SF,290,1200,1,0,10,0.09
+1,tcp,ftp_data,SF,150,600,1,0,7,0.08
+0,tcp,http,SF,244,5000,1,0,17,0.11

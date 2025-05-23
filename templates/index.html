@@ -1,58 +1,230 @@
 {% extends 'base.html' %}
 {% block content %}
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+        body {
+            background: linear-gradient(135deg, #15172b 0%, #23243b 100%);
+            color: #e0e6f0;
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 2.1em;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: #71f8ff;
+            text-shadow: 0 4px 24px #00ffe030;
+        }
+        .sim-traffic-container {
+            background: rgba(30, 34, 66, 0.99);
+            max-width: 480px;
+            margin: 40px auto;
+            padding: 36px 38px 28px 38px;
+            border-radius: 18px;
+            box-shadow: 0 6px 24px 0 #00ffe025, 0 1.5px 0 0 #22263a;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            animation: popIn 1s cubic-bezier(.68,-0.55,.27,1.55);
+            position: relative;
+            z-index: 2;
+        }
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.8) translateY(40px);}
+            60% { opacity: 1; transform: scale(1.05) translateY(-8px);}
+            100% { opacity: 1; transform: scale(1) translateY(0);}
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 8px;
+        }
+        label {
+            color: #71f8ff;
+            font-weight: 600;
+            margin-bottom: 6px;
+            letter-spacing: 0.6px;
+            font-size: 1.07em;
+        }
+        input[type="text"],
+        select {
+            background: #202344;
+            color: #e0e6f0;
+            border: 1.5px solid #71f8ff;
+            border-radius: 7px;
+            padding: 10px 10px;
+            font-size: 1.03em;
+            transition: border 0.2s;
+            outline: none;
+        }
+        input[type="text"]:focus,
+        select:focus {
+            border-color: #00ffe0;
+        }
+        button[type="submit"] {
+            background: linear-gradient(90deg, #71f8ff 0%, #00ffe0 100%);
+            color: #15172b;
+            font-weight: 700;
+            font-size: 1.15em;
+            letter-spacing: 1px;
+            border: none;
+            border-radius: 7px;
+            padding: 13px 0;
+            margin-top: 14px;
+            transition: background 0.2s, color 0.2s;
+            cursor: pointer;
+            box-shadow: 0 2px 12px #00ffe025;
+        }
+        button[type="submit"]:hover {
+            background: linear-gradient(90deg, #00ffe0 0%, #71f8ff 100%);
+            color: #23243b;
+        }
+        /* Cyber security glowing accent */
+        body:before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at 80% 0%, #00ffe055 0%, transparent 60%),
+                        radial-gradient(ellipse at 0% 100%, #71f8ff35 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        h2, .sim-traffic-container {
+            position: relative;
+            z-index: 1;
+        }
+        /* Prediction Box Animation */
+        .prediction-alert-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(32,36,68,0.98);
+            box-shadow: 0 8px 32px #00ffe033, 0 1.5px 0 0 #22263a;
+            border-radius: 18px;
+            padding: 50px 30px 38px 30px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 340px;
+            min-height: 180px;
+            z-index: 10;
+            animation: fadeAlertIn 0.85s cubic-bezier(.82,-0.3,.27,1.25);
+            border: 2.5px solid #ff6b6b;
+        }
+        .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            background: none;
+            border: none;
+            font-size: 1.6em;
+            color: #ff6b6b;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 11;
+            transition: color 0.2s, transform 0.1s;
+            outline: none;
+        }
+        .close-btn:hover {
+            color: #ff2323;
+            transform: scale(1.18) rotate(10deg);
+        }
+        @keyframes fadeAlertIn {
+            0% { opacity: 0; transform: translate(-50%, -40%) scale(0.85);}
+            60% { opacity: 1; transform: translate(-50%, -52%) scale(1.07);}
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1);}
+        }
+        .prediction-alert-box .alert-title {
+            color: #ff2323;
+            font-size: 2em;
+            font-weight: 900;
+            margin-bottom: 14px;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 18px #ff232360;
+            text-align: center;
+        }
+        .prediction-alert-box .prediction-value {
+            color: #e0e6f0;
+            font-size: 1.3em;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 6px;
+        }
+        @media (max-width: 600px) {
+            .sim-traffic-container {
+                max-width: 98vw;
+                padding: 15px 4vw 18px 4vw;
+            }
+            .prediction-alert-box {
+                min-width: 60vw;
+                padding: 30px 7vw 30px 7vw;
+            }
+        }
+    </style>
     <h2>Simulate Network Traffic</h2>
-    <form method="POST" action="{{ url_for('simulate_traffic') }}">
-        <div class="form-group">
-            <label for="duration">Duration</label>
-            <input type="text" name="duration" required>
-        </div>
-        <div class="form-group">
-            <label for="protocol_type">Protocol Type</label>
-            <select name="protocol_type" required>
-                <option value="">Select Protocol</option>
-                <option value="tcp">TCP</option>
-                <option value="udp">UDP</option>
-                <option value="icmp">ICMP</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="service">Service</label>
-            <input type="text" name="service" required>
-        </div>
-        <div class="form-group">
-            <label for="flag">Flag</label>
-            <input type="text" name="flag" required>
-        </div>
-        <div class="form-group">
-            <label for="src_bytes">Source Bytes</label>
-            <input type="text" name="src_bytes" required>
-        </div>
-        <div class="form-group">
-            <label for="dst_bytes">Destination Bytes</label>
-            <input type="text" name="dst_bytes" required>
-        </div>
-        <div class="form-group">
-            <label for="logged_in">Logged In</label>
-            <select name="logged_in" required>
-                <option value="0">No</option>
-                <option value="1">Yes</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="wrong_fragment">Wrong Fragments</label>
-            <input type="text" name="wrong_fragment" required>
-        </div>
-        <div class="form-group">
-            <label for="same_srv_count">Same Destination Count</label>
-            <input type="text" name="same_srv_count" required>
-        </div>
-        <div class="form-group">
-            <label for="same_srv_rate">Same Port Count</label>
-            <input type="text" name="same_srv_rate" required>
-        </div>
-        <button type="submit">Detect Attack</button>
-    </form>
+    <div class="sim-traffic-container">
+        <form method="POST" action="{{ url_for('simulate_traffic') }}">
+            <div class="form-group">
+                <label for="duration">Duration</label>
+                <input type="text" name="duration" required>
+            </div>
+            <div class="form-group">
+                <label for="protocol_type">Protocol Type</label>
+                <select name="protocol_type" required>
+                    <option value="">Select Protocol</option>
+                    <option value="tcp">TCP</option>
+                    <option value="udp">UDP</option>
+                    <option value="icmp">ICMP</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="service">Service</label>
+                <input type="text" name="service" required>
+            </div>
+            <div class="form-group">
+                <label for="flag">Flag</label>
+                <input type="text" name="flag" required>
+            </div>
+            <div class="form-group">
+                <label for="src_bytes">Source Bytes</label>
+                <input type="text" name="src_bytes" required>
+            </div>
+            <div class="form-group">
+                <label for="dst_bytes">Destination Bytes</label>
+                <input type="text" name="dst_bytes" required>
+            </div>
+            <div class="form-group">
+                <label for="logged_in">Logged In</label>
+                <select name="logged_in" required>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="wrong_fragment">Wrong Fragments</label>
+                <input type="text" name="wrong_fragment" required>
+            </div>
+            <div class="form-group">
+                <label for="same_srv_count">Same Destination Count</label>
+                <input type="text" name="same_srv_count" required>
+            </div>
+            <div class="form-group">
+                <label for="same_srv_rate">Same Port Count</label>
+                <input type="text" name="same_srv_rate" required>
+            </div>
+            <button type="submit">Detect Attack</button>
+        </form>
+    </div>
     {% if prediction %}
-        <h3>Prediction: {{ prediction }}</h3>
+        <div class="prediction-alert-box" id="predictionAlertBox">
+            <button class="close-btn" onclick="document.getElementById('predictionAlertBox').style.display='none';" aria-label="Close">&times;</button>
+            <span class="alert-title">ALERT</span>
+            <span class="prediction-value">{{ prediction }}</span>
+        </div>
     {% endif %}
 {% endblock %}

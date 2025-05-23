@@ -3,28 +3,109 @@
 <head>
     <title>IDS Project</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="static/logo.png" type="image/x-icon">
+    <style>
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(30, 34, 66, 0.97);
+            padding: 0.5rem 2.3vw 0.5rem 1vw;
+            box-shadow: 0 6px 24px 0 #00ffe025, 0 1.5px 0 0 #22263a;
+            position: relative;
+            z-index: 10;
+        }
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-logo-img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+            margin-right: 10px;
+        }
+        .nav-ids-title {
+            color: #71f8ff;
+            font-size: 1.64em;
+            font-weight: 800;
+            letter-spacing: 2px;
+            font-family: 'Roboto', Arial, sans-serif;
+            text-shadow: 0 2px 12px #00ffe055;
+            user-select: none;
+        }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.3vw;
+        }
+        nav a {
+            color: #71f8ff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.01em;
+            margin: 0 6px;
+            transition: color 0.18s;
+            letter-spacing: 1.1px;
+            padding: 4px 10px;
+            border-radius: 5px;
+        }
+        nav a:hover {
+            color: #00ffe0;
+            background: #15172b55;
+        }
+        nav span {
+            color: #e0e6f0;
+            font-weight: 600;
+            font-size: 1.05em;
+            margin: 0 8px;
+            letter-spacing: 1px;
+        }
+        @media (max-width: 700px) {
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0.5rem 3vw;
+            }
+            .nav-right {
+                margin-top: 8px;
+                gap: 2vw;
+                flex-wrap: wrap;
+            }
+            .nav-left {
+                margin-bottom: 4px;
+            }
+        }
+    </style>
     {% block extra_head %}{% endblock %}
 </head>
 <body>
-    <nav>
-        <a href="{{ url_for('index') }}">Home</a>
-        <a href="{{ url_for('team') }}">Team</a>
-        {% if session.get('username') %}
-            <a href="{{ url_for('upload_scan') }}">File Scan</a>
-            <span>Welcome, {{ session['username'] }}</span>
-            <a href="{{ url_for('logout') }}">Logout</a>
-        {% else %}
-            <a href="{{ url_for('login') }}">Login</a>
-            <a href="{{ url_for('signup') }}">Sign Up</a>
-        {% endif %}
+   <nav>
+        <div class="nav-left">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="IDS Logo" class="nav-logo-img">
+            <span class="nav-ids-title">IDS</span>
+        </div>
+        <div class="nav-right">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('team') }}">Team</a>
+            <a href="{{ url_for('upload_file') }}">Upload File</a>
+            {% if session.get('username') %}
+                <span>Welcome, {{ session['username'] }}</span>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('signup') }}">Sign Up</a>
+            {% endif %}
+        </div>
     </nav>
     <div class="container">
         {% with messages = get_flashed_messages() %}
           {% if messages %}
             <ul class="flashes">
-              {% for message in messages %}
+              <!-- {% for message in messages %}
                 <li>{{ message }}</li>
-              {% endfor %}
+              {% endfor %} -->
             </ul>
           {% endif %}
         {% endwith %}

@@ -1,5 +1,93 @@
 {% extends 'base.html' %}
 {% block content %}
+    <style>
+        body {
+            background: linear-gradient(135deg, #15172b 0%, #23243b 100%);
+            color: #e0e6f0;
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+        }
+        .logout-container {
+            background: rgba(30, 34, 66, 0.99);
+            max-width: 400px;
+            margin: 90px auto 0 auto;
+            padding: 38px 32px 32px 32px;
+            border-radius: 18px;
+            box-shadow: 0 6px 24px 0 #00ffe025, 0 1.5px 0 0 #22263a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: popIn 0.8s cubic-bezier(.68,-0.55,.27,1.55);
+            position: relative;
+            z-index: 2;
+        }
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.8) translateY(40px);}
+            60% { opacity: 1; transform: scale(1.05) translateY(-8px);}
+            100% { opacity: 1; transform: scale(1) translateY(0);}
+        }
+        .logout-container h2 {
+            color: #71f8ff;
+            text-align: center;
+            margin-bottom: 18px;
+            font-size: 2em;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-shadow: 0 4px 24px #00ffe030;
+        }
+        .logout-container p {
+            color: #e0e6f0;
+            font-size: 1.1em;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logout-container .btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #71f8ff 0%, #00ffe0 100%);
+            color: #15172b;
+            font-weight: 700;
+            font-size: 1.02em;
+            letter-spacing: 1px;
+            border: none;
+            border-radius: 7px;
+            padding: 12px 0;
+            margin: 7px 0;
+            width: 80%;
+            text-align: center;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+            box-shadow: 0 2px 12px #00ffe025;
+            cursor: pointer;
+        }
+        .logout-container .btn:hover {
+            background: linear-gradient(90deg, #00ffe0 0%, #71f8ff 100%);
+            color: #23243b;
+        }
+        /* Cyber security glowing accent */
+        body:before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at 80% 0%, #00ffe055 0%, transparent 60%),
+                        radial-gradient(ellipse at 0% 100%, #71f8ff35 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .logout-container {
+            position: relative;
+            z-index: 1;
+        }
+        @media (max-width: 600px) {
+            .logout-container {
+                max-width: 98vw;
+                padding: 18px 5vw 16px 5vw;
+            }
+            .logout-container .btn {
+                width: 95%;
+            }
+        }
+    </style>
 <div class="logout-container">
     <h2>You have been logged out.</h2>
     <p>Thank you for using the IDS Project.</p>
