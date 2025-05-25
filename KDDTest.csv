@@ -48,4 +48,5 @@ duration,protocol_type,service,flag,src_bytes,dst_bytes,logged_in,wrong_fragment
 0,tcp,http,SF,225,1340,1,0,21,0.17,normal
 0,udp,private,S0,0,0,0,0,0,0.00,portsweep
 2,tcp,http,S0,0,0,0,0,0,0.00,neptune
+
 1,icmp,eco_i,SF,0,0,0,0,0,0.00,smurf
