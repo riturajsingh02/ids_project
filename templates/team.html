@@ -1,151 +1,249 @@
-{% extends 'base.html' %}
+{% extends 'index.html' %}
 {% block content %}
 <style>
     body {
+        background: linear-gradient(135deg, #15172b 0%, #23243b 100%);
+        color: #e0e6f0;
+        font-family: 'Roboto', Arial, sans-serif;
         margin: 0;
-        padding: 0;
-        font-family: 'Arial', sans-serif;
-        background: #0f2027;
-        color: #ffffff;
-        overflow-x: hidden;
+        min-height: 100vh;
     }
-    #particles-js {
-        position: fixed;
+
+    h2.title {
+        text-align: center;
+        margin-top: 70px;
+        font-size: 2em;
+        font-weight: 700;
+        letter-spacing: 1.4px;
+        color: #71f8ff;
+        text-shadow: 0 4px 24px #00ffe030;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    .info {
+        font-family: "Montserrat", sans-serif;
+        color: #8d97ad;
+        font-weight: 300;
+    }
+
+    .name1 {
+        font-family: "Poppins", sans-serif;
+        padding: 80px 0;
+    }
+
+    .name1 .header .title {
+        font-weight: 800;
+        font-size: 55px;
+        margin-bottom: 50px;
+    }
+
+    .name2 {
+        margin-top: 50px;
+        padding: 30px;
+        background-color: #f6f9ff;
+        border-radius: 50px;
+        transition: background 0.3s;
+    }
+
+    .name2:hover {
+        background: linear-gradient(to right, #016cec, #00b5f7);
+        color: white;
+    }
+
+    .name2 .image {
+        position: relative;
+        margin-bottom: 30px;
+    }
+
+    .name2 .image img {
+        width: 100%;
+        border-radius: 50%;
+        border: 1px dashed transparent;
+    }
+
+    .name2:hover .image img {
+        border: 4px dashed #fff;
+        padding: 8px;
+    }
+
+    .name2 .image .icon {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 50%);
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+        background: linear-gradient(to right, #016cec, #00b5f7);
+        color: #fff;
+        border-radius: 50%;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+    }
+
+    .name2 .image .icon:hover {
+        background: #fff;
+        color: #016cec;
+    }
+
+    .name2 .image .icon a {
+        color: inherit;
+        text-decoration: none;
+        display: block;
         width: 100%;
         height: 100%;
-        z-index: -1;
-        top: 0;
-        left: 0;
+        line-height: 60px;
     }
-    .team-section {
-        text-align: center;
-        padding: 80px 20px;
-        background: rgba(0, 0, 0, 0.6);
+
+    .name2 .info .name {
+        font-size: 24px;
+        font-weight: 700;
     }
-    .team-section h2 {
-        font-size: 40px;
-        margin-bottom: 30px;
-        color: #00ffff;
-        text-shadow: 0 0 10px #00ffff;
+
+    .name2 .info .head1 {
+        text-transform: uppercase;
+        font-size: 14px;
+        color: #016cec;
     }
-    .team-cards {
+
+    .name2:hover .info .name,
+    .name2:hover .info .head1 {
+        color: #fff;
+    }
+
+    .follow-us a {
+        color: #8d97ad;
+        transition: 0.2s;
+    }
+
+    .follow-us a:hover {
+        color: #316ce8;
+        transform: translateY(-3px);
+    }
+
+    .row {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 30px;
+        gap: 20px;
     }
-    .team-card {
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 15px;
-        box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
-        width: 250px;
-        padding: 20px;
+
+    .col-md-3 {
+        flex: 1 1 calc(25% - 20px);
+        max-width: 25%;
+    }
+
+    @media (max-width: 768px) {
+        .col-md-3 {
+            max-width: 100%;
+        }
+
+        .name1 .header .title {
+            font-size: 36px;
+        }
+    }
+
+    .text-center {
         text-align: center;
-        transition: transform 0.3s ease;
     }
-    .team-card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 30px rgba(0, 255, 255, 0.7);
+
+    ul {
+        padding: 0;
+        list-style: none;
     }
-    .team-card img {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        border: 4px solid #00ffff;
-        object-fit: cover;
-        margin-bottom: 15px;
-    }
-    .team-card h3 {
-        margin: 10px 0 5px;
-        font-size: 20px;
-        color: #00ffff;
-    }
-    .team-card p {
-        margin: 0;
-        color: #ccc;
-        font-size: 14px;
+
+    .list-inline-item {
+        display: inline-block;
+        margin: 0 5px;
     }
 </style>
-<div id="particles-js"></div>
-<section class="team-section">
-    <h2>Meet Our Team</h2>
-    <div class="team-cards">
-        <div class="team-card">
-            <img src="{{ url_for('static', filename='team1.jpg') }}" alt="Team Member 1">
-            <h3>Rituraj Singh Rana</h3>
-            <p>Lead Developer</p>
-        </div>
-        <div class="team-card">
-            <img src="{{ url_for('static', filename='team2.jpg') }}" alt="Team Member 2">
-            <h3>Niharika Negi</h3>
-            <p>UI/UX Designer</p>
-        </div>
-        <div class="team-card">
-            <img src="{{ url_for('static', filename='team3.jpg') }}" alt="Team Member 3">
-            <h3>Harshit Tripathi</h3>
-            <p>ML Engineer</p>
-        </div>
-        <div class="team-card">
-            <img src="{{ url_for('static', filename='team4.jpg') }}" alt="Team Member 4">
-            <h3>Shreya Koranga</h3>
-            <p>Security Analyst</p>
+
+<!-- Include Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<div class="container">
+    <div class="row justify-content-center text-center">
+        <div class="col">
+            <div class="header">
+                <h2 class="title">Our Team Members</h2>
+            </div>
         </div>
     </div>
-</section>
-<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-<script>
-    particlesJS("particles-js", {
-        particles: {
-            number: {
-                value: 80,
-                density: { enable: true, value_area: 800 }
-            },
-            color: { value: "#00ffff" },
-            shape: {
-                type: "circle",
-                stroke: { width: 0, color: "#000000" },
-                polygon: { nb_sides: 5 }
-            },
-            opacity: {
-                value: 0.5,
-                random: false,
-                anim: { enable: false }
-            },
-            size: {
-                value: 3,
-                random: true,
-                anim: { enable: false }
-            },
-            line_linked: {
-                enable: true,
-                distance: 150,
-                color: "#00ffff",
-                opacity: 0.4,
-                width: 1
-            },
-            move: {
-                enable: true,
-                speed: 3,
-                direction: "none",
-                random: false,
-                straight: false,
-                out_mode: "out",
-                bounce: false
-            }
-        },
-        interactivity: {
-            detect_on: "canvas",
-            events: {
-                onhover: { enable: true, mode: "grab" },
-                onclick: { enable: true, mode: "push" },
-                resize: true
-            },
-            modes: {
-                grab: { distance: 140, line_linked: { opacity: 1 } },
-                push: { particles_nb: 4 }
-            }
-        },
-        retina_detect: true
-    });
-</script>
-{% endblock %}
+
+    <div class="row">
+
+        <!-- Member 1 -->
+        <div class="col-md-3">
+            <div class="name2 text-center">
+                <div class="image">
+                    <img src="{{ url_for('static', filename='team1.jpg') }}" alt="Rituraj">
+                    <div class="icon">
+                        <a href="https://github.com/riturajsingh02" target="_blank"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="info">
+                    <h3 class="name">Rituraj Singh Rana</h3>
+                    <span class="head1">FrontEnd Web-developer</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Member 2 -->
+        <div class="col-md-3">
+            <div class="name2 text-center">
+                <div class="image">
+                    <img src="{{ url_for('static', filename='team2.jpg') }}" alt="Harshit Tripathi">
+                    <div class="icon">
+                        <a href="https://github.com/harshitsonu" target="_blank"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="info">
+                    <h3 class="name">Harshit Tripathi</h3>
+                    <span class="head1">ML Engineer</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Member 3 -->
+        <div class="col-md-3">
+            <div class="name2 text-center">
+                <div class="image">
+                    <img src="{{ url_for('static', filename='team3.jpg') }}" alt="Niharika Negi">
+                    <div class="icon">
+                        <a href="https://github.com/Niharika2424" target="_blank"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="info">
+                    <h3 class="name">Niharika Negi</h3>
+                    <span class="head1">Backend Engineer</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Member 4 -->
+        <div class="col-md-3">
+            <div class="name2 text-center">
+                <div class="image">
+                    <img src="{{ url_for('static', filename='team4.jpg') }}" alt="Shreya Koranga">
+                    <div class="icon">
+                        <a href="https://github.com/Shreya-0811" target="_blank"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="info">
+                    <h3 class="name">Shreya Koranga</h3>
+                    <span class="head1">Backend Engineer</span>
+                </div>
+            </div>
+         </div>
+
+    </div>
+</div>
+{% endblock %}
