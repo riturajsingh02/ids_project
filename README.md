@@ -20,7 +20,7 @@ The application features a user-friendly web interface where users can input net
 - ✅ Password Recovery Module
 - ✅ Secure Access Control
 - ✅ Web-Based User Interface
-- ✅ High Prediction Accuracy (~92%)
+- ✅ High Prediction Accuracy (~85%)
 - ✅ Reduced False Positives
 - ✅ Easy-to-Use Dashboard
 
@@ -29,14 +29,11 @@ The application features a user-friendly web interface where users can input net
 ## 🛠️ Technologies Used
 
 - Python
-- Flask
 - Scikit-learn
 - Pandas
 - NumPy
-- HTML5
-- CSS3
-- Bootstrap
-- SQLite / MySQL *(Use whichever database you actually used.)*
+- HTML
+- CSS
 
 ---
 
@@ -118,7 +115,7 @@ http://127.0.0.1:5000
 
 ## 📊 Model Performance
 
-- 🎯 Classification Accuracy: **92%**
+- 🎯 Classification Accuracy: **85%**
 - 📉 False Positives Reduced by: **18%**
 - ⚡ Real-Time Prediction Support
 - 🔐 Secure User Authentication
