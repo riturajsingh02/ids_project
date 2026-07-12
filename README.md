@@ -34,6 +34,8 @@ The application features a user-friendly web interface where users can input net
 - NumPy
 - HTML
 - CSS
+- OS concepts
+- Machine Learning
 
 ---
 
